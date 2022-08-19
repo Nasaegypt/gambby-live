@@ -18,7 +18,6 @@ django-model-utils==4.1.1
 django-phonenumber-field==5.2.0
 djangorestframework==3.13.1
 Flask==2.0.1
-GDAL @ file:///C:/gambby/GDAL-3.3.1-cp39-cp39-win_amd64.whl
 geos==0.2.3
 gunicorn==20.1.0
 itsdangerous==2.0.1
