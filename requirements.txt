@@ -42,4 +42,4 @@ tqdm==4.61.2
 Unidecode==1.2.0
 Werkzeug==2.0.1
 whitenoise==6.2.0
-gdal==2.3.3
+gdal[numpy]
