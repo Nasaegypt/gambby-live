@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>Add New Service</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ bradcam_area  -->
+
+    <div class="job_details_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="apply_job_form white-bg">
+                        <h4>Post Your Service</h4>
+                            <form method="POST" id="serviceForm" data-cities-url="{% url 'services:ajax_load_cities' %}" enctype="multipart/form-data" data-sub_categories-url="{% url 'services:ajax_load_sub_categories' %}">
+                              {% csrf_token %}
+                              {% bootstrap_form form layout='horizontal'%}
+                              {% buttons %}
+                                <button class="boxed-btn3 w-100" type="submit">Post Now</button>
+                              {% endbuttons %}
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#id_service_region").change(function () {
+        const url = $("#serviceForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const regionId = $(this).val();  // get the selected region ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'region_id': regionId       // add the region id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_service_city").html(data);  // replace the contents of the city input with the data that came from the server
+                let html_data = (data);
+                $("#id_service_city").html(html_data);
+
+
+            }
+        });
+
+    });
+</script>
+
+
+<script>
+    $("#id_category").change(function () {
+        const url = $("#serviceForm").attr("data-sub_categories-url");  // get the url of the `load_sub_category` view
+        const categoryId = $(this).val();  // get the selected category ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-sub_categories/ )
+            data: {
+                'main_category_id': categoryId       // add the category id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_sub_categories` view function
+                console.log(data)
+                $("#id_sub_category").html(data);  // replace the contents of the city input with the data that came from the server
+                let html_data = (data);
+                $("#id_sub_category").html(html_data);
+
+
+            }
+        });
+
+    });
+</script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#id_service_region').select2();
+        $('#id_service_city').select2();
+        $('#id_sub_category').select2();
+    });
+</script>
+
+
+
+{% endblock body %}
